@@ -7,6 +7,7 @@ import {AiOutlineRollback} from 'react-icons/ai'
 import disciplinaValidator from '../../validators/disciplinaValidator'
 import DisciplinaService from '../../services/academico/DisciplinaService'
 import { useEffect } from 'react'
+import { mask } from 'remask'
 
 
 const Disciplinas = () => {

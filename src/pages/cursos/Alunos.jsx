@@ -5,13 +5,19 @@ import { Link } from 'react-router-dom'
 import {FaCheck} from 'react-icons/fa'
 import alunosValidator from '../../validators/alunosValidator'
 import AlunosService from '../../services/academico/AlunosService'
+import { mask } from 'remask'
 
 const Alunos = () => {
 
-  const {register, handleSubmit, formState: {errors} } = useForm();
+  const {register, handleSubmit, setValue, formState: {errors} } = useForm();
 
   function salvar(dados) {
     AlunosService.create(dados)
+  }
+
+  function handleChange(event) {
+    const mascara = event.target.getAttribute('mask')
+    setValue(event.target.name, mask(event.target.value, mascara))
   }
 
   return (
@@ -28,19 +34,23 @@ const Alunos = () => {
 
          <Form.Group className="mb-3" controlId="cpf">
            <Form.Label>CPF: </Form.Label>
-           <Form.Control type="text"{...register("cpf", alunosValidator.cpf)}  />
-           {errors.cpf && <span>{errors.cpf.message}</span>}
+           <Form.Control type="text"{...register("cpf", alunosValidator.cpf)}
+             mask="999.999.999-99" onChange={handleChange} 
+             />
+             {errors.telefone && <span>{errors.cpf.message}</span>}
          </Form.Group>
 
          <Form.Group className="mb-3" controlId="matricula">
            <Form.Label>Matricula: </Form.Label>
-           <Form.Control type="text"{...register("matricula", alunosValidator.matricula)}  />
-           {errors.matricula && <span>{errors.matricula.message}</span>}
+           <Form.Control type="text"{...register("matricula", alunosValidator.matricula)}  
+            mask="9999-9999.99" onChange={handleChange}
+           />
+           {errors.telefone && <span>{errors.matricula.message}</span>}
          </Form.Group>
 
          <Form.Group className="mb-3" controlId="email">
            <Form.Label>E-mail: </Form.Label>
-           <Form.Control type="text"{...register("email", alunosValidator.email)}  />
+           <Form.Control type="email"{...register("email", alunosValidator.email)}  />
            {errors.email && <span>{errors.email.message}</span>}
          </Form.Group>
 
