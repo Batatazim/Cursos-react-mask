@@ -8,6 +8,7 @@ import disciplinaValidator from '../../validators/disciplinaValidator'
 import DisciplinaService from '../../services/academico/DisciplinaService'
 import { useEffect } from 'react'
 import { mask } from 'remask'
+import Swal from 'sweetalert2'
 
 
 const Disciplinas = () => {
@@ -28,9 +29,11 @@ const Disciplinas = () => {
 }, [])
 
   function salvar(dados) {
+    Swal.fire({icon: 'success',text: 'Seu arquivo foi salvo'})
     if(params.id){
-      DisciplinaService.update(params.id, dados)
+      DisciplinaService.update(params.id, dados) 
     }
+
     else{
     DisciplinaService.create(dados)
     navigate('/disciplinas')

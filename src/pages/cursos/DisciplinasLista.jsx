@@ -7,6 +7,8 @@ import {BsTrash, BsPencil} from 'react-icons/bs'
 import {AiOutlinePlus} from 'react-icons/ai'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import {AiOutlineRollback} from 'react-icons/ai'
+import Swal from 'sweetalert2'
+
 
 
 const DisciplinasLista = () => {
@@ -18,9 +20,25 @@ const DisciplinasLista = () => {
     }, [])
 
     function apagar(id) {
-      if(window.confirm('Quer apagar a parada ?'))
-      DisciplinaService.delete(id)
-      setDisciplinas(DisciplinaService.getAll())
+      Swal.fire({
+        title: 'Quer deletar a parada?',
+        text: "Tu pode se arrepender meu nobre!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim, quero deletar!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Deletado!',
+            'O seu arquivo foi deletado.',
+            'success',
+            DisciplinaService.delete(id),
+            setDisciplinas(DisciplinaService.getAll()),
+          )
+        }
+      })
     }
 
     console.log(disciplinas);
